@@ -4,13 +4,12 @@ import Charts 1.0
 Rectangle {
     width: 360
     height: 360
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
-    }
+
     PieSlice{
-        width: 300
-        height: 300
+        id: pp
+        anchors.fill: parent
+        color:"yellow"
+        spanAngle: 20
     }
 
     MouseArea {
@@ -19,4 +18,5 @@ Rectangle {
             Qt.quit();
         }
     }
+
 }

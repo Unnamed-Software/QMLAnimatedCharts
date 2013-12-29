@@ -2,33 +2,41 @@
 #define PIESLICE_H
 
 #include <QQuickPaintedItem>
-#include <QPainter>\
+#include <QPainter>
 #include <QPen>
 #include <QColor>
 
 class PieSlice : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(int angle READ angle WRITE setAngle NOTIFY angleChanged)
+    Q_PROPERTY(int startAngle READ startAngle WRITE setStartAngle NOTIFY startAngleChanged)
+    Q_PROPERTY(int spanAngle READ spanAngle WRITE setSpanAngle NOTIFY spanAngleChanged)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
 public:
-    explicit PieSlice(QQuickItem *parent = 0);
+    PieSlice(QQuickItem *parent = 0 );
     void paint(QPainter *painter);
 
-    void setAngle(int angle);
-    int angle() const;
+    void setStartAngle(int angle);
+    int startAngle() const;
+
+    void setSpanAngle(int angle);
+    int spanAngle() const;
 
     void setColor(QColor color);
     QColor color() const;
 
+    int v_startAngle;
+    int v_spanAngle;
+    QColor v_color;
+
 signals:
-    void angleChanged();
+    void startAngleChanged();
+    void spanAngleChanged();
     void colorChanged();
 public slots:
 
 private:
-    int v_angle;
-    QColor v_color;
+
 
 };
 

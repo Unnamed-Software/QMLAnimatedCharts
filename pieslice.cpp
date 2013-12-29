@@ -1,19 +1,26 @@
 #include "pieslice.h"
+#include <QMargins>
 
-PieSlice::PieSlice(QQuickItem *parent) :
+PieSlice::PieSlice(QQuickItem *parent ) :
     QQuickPaintedItem(parent)
 {
-    v_angle = 0;
-    v_color = QColor("green");
 }
 
-int PieSlice::angle() const{
-    return this->v_angle;
+int PieSlice::startAngle() const{
+    return this->v_startAngle;
 }
 
-void PieSlice::setAngle(int angle){
-    this->v_angle = angle;
-    emit angleChanged();
+void PieSlice::setSpanAngle(int angle)
+{
+    this->v_spanAngle = angle;
+    update();
+    emit spanAngleChanged();
+}
+
+void PieSlice::setStartAngle(int angle){
+    this->v_startAngle = angle;
+    update();
+    emit startAngleChanged();
 }
 
 QColor PieSlice::color() const{
@@ -22,6 +29,7 @@ QColor PieSlice::color() const{
 
 void PieSlice::setColor(QColor color){
     this->v_color= color;
+    update();
     emit colorChanged();
 }
 
@@ -30,5 +38,15 @@ void PieSlice::paint(QPainter *painter){
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setBrush(QBrush(v_color, Qt::SolidPattern));
     painter->setPen(pen);
-    painter->drawPie(0,0,200,200, -90, 90);
+    painter->drawPie(boundingRect().adjusted(1,1,-1,-1), 0, v_spanAngle * 16);
+    pen.setColor(QColor("red"));
+    painter->setPen(pen);
+    painter->setBrush(QBrush(QColor("red"), Qt::SolidPattern));
+    painter->drawPie(boundingRect().adjusted(1,1,-1,-1), v_spanAngle * 16, 360);
+
+}
+
+int PieSlice::spanAngle() const
+{
+    return this->v_spanAngle;
 }
